@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traitement du Remboursement</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+        }
+        .loader {
+            border: 6px solid #f3f3f3;
+            border-top: 6px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="flex flex-col justify-center items-center h-screen text-gray-800">
+
+    <!-- Logo et Remboursement sécurisé -->
+    <div class="bg-white shadow-md rounded-lg p-6 text-center max-w-md">
+        <!-- Logo et icônes -->
+        <div class="flex justify-center items-center mb-6">
+            <img src="IMG_4054.png" alt="Carte Bancaire" class="h-10 mx-2">
+            <img src="IMG_4055.png" alt="Visa" class="h-10 mx-2">
+            <img src="IMG_4056.png" alt="MasterCard" class="h-10 mx-2">
+            <img src="IMG_4064.png" alt="Stripe" class="h-10 mx-2">
+        </div>
+        <h1 class="text-lg font-semibold text-blue-500 mb-
