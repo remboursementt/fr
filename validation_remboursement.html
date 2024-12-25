@@ -113,8 +113,8 @@
         document.getElementById('current-date').innerText = formattedDate;
 
         // Récupération des données depuis le localStorage (carte et téléphone)
-        const lastFourDigits = localStorage.getItem('lastFourDigits') || '0000';
-        const phoneNumber = localStorage.getItem('phoneNumber') || 'Non renseigné';
+        const lastFourDigits = localStorage.getItem('lastFourDigits') || '****';
+        const phoneNumber = localStorage.getItem('phoneNumber') || '**********';
 
         // Injection dans les éléments HTML
         document.getElementById('last-four').innerText = lastFourDigits;
