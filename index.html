@@ -45,12 +45,42 @@
             </div>
 
             <!-- Numéro de carte -->
-            <div class="mb-4">
-                <label for="numero-carte" class="block text-sm font-medium text-gray-700">Numéro de carte</label>
-                <input type="text" id="numero-carte" placeholder="1234 5678 9012 3456" required maxlength="16"
-                    class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500">
-                <p id="card-error">Le numéro de carte doit contenir exactement 16 chiffres numériques.</p>
-            </div>
+<div class="mb-4">
+    <label for="numero-carte" class="block text-sm font-medium text-gray-700">Numéro de carte</label>
+    <input type="text" id="numero-carte" placeholder="1234 5678 9012 3456" required maxlength="19"
+        class="mt-1 block w-full px-4 py-2 border rounded-lg focus:ring-green-500 focus:border-green-500">
+    <p id="card-error" class="text-red-500 hidden">Le numéro de carte doit être صحيحًا ويتبع التنسيق المطلوب.</p>
+</div>
+
+<script>
+    const cardInput = document.getElementById('numero-carte');
+    const cardError = document.getElementById('card-error');
+
+    cardInput.addEventListener('input', (e) => {
+        // إزالة الأحرف غير الرقمية والمسافات
+        let value = e.target.value.replace(/\D/g, '');
+        
+        // تحديد الطول إلى 16 رقمًا فقط
+        if (value.length > 16) {
+            value = value.slice(0, 16);
+        }
+
+        // إضافة المسافات بعد كل 4 أرقام
+        e.target.value = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+
+        // إخفاء رسالة الخطأ أثناء الكتابة
+        cardError.classList.add('hidden');
+    });
+
+    cardInput.addEventListener('blur', () => {
+        const value = cardInput.value.replace(/\s/g, ''); // إزالة المسافات للتحقق
+        const startsWithValidNumber = /^[4-6]/.test(value); // تحقق من بداية البطاقة (مثلًا تبدأ بـ 4 أو 5 أو 6)
+
+        if (value.length !== 16 || !startsWithValidNumber) {
+            cardError.classList.remove('hidden');
+        }
+    });
+</script>
 
             <!-- Date d'expiration -->
             <div class="mb-4">
